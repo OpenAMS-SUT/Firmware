@@ -1,5 +1,8 @@
 # OpenAMS Firmware
 
+## Prerequisites
+TBD
+
 ## Copying the repository
 To copy the repository to the Raspberry Pi, open the terminal in desired location and run:
 ```
