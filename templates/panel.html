@@ -14,61 +14,6 @@
 
 
     <meta name="theme-color" content="#712cf9">
-
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-
-        .b-example-divider {
-            height: 3rem;
-            background-color: rgba(0, 0, 0, .1);
-            border: solid rgba(0, 0, 0, .15);
-            border-width: 1px 0;
-            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-        }
-
-        .b-example-vr {
-            flex-shrink: 0;
-            width: 1.5rem;
-            height: 100vh;
-        }
-
-        .bi {
-            vertical-align: -.125em;
-            fill: currentColor;
-        }
-
-        .nav-scroller {
-            position: relative;
-            z-index: 2;
-            height: 2.75rem;
-            overflow-y: hidden;
-        }
-
-        .nav-scroller .nav {
-            display: flex;
-            flex-wrap: nowrap;
-            padding-bottom: 1rem;
-            margin-top: -1px;
-            overflow-x: auto;
-            text-align: center;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-        }
-    </style>
-
 </head>
 
 <body>
@@ -96,25 +41,25 @@
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">
+                            <a class="nav-link active" aria-current="page" href="panel">
                                 <span data-feather="home" class="align-text-bottom"></span>
                                 Panel
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="settings">
                                 <span data-feather="file" class="align-text-bottom"></span>
                                 Ustawienia
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="info">
                                 <span data-feather="file" class="align-text-bottom"></span>
                                 Informacje
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="https://github.com/OpenAMS-SUT" target="_blank">
                                 <span data-feather="file" class="align-text-bottom"></span>
                                 GitHub
                             </a>
@@ -127,12 +72,8 @@
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Panel</h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <button class="btn btn-primary" type="button" style="pointer-events: none;">
-                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                            Obracanie
-                        </button>
-                        <button type="button" class="btn btn-success" style="pointer-events: none;">Gotowy</button>
+                    <div class="btn-toolbar mb-2 mb-md-0" id="stateField">
+                        <button type="button" class="btn btn-success" style="pointer-events: none;" id="stateReady">Gotowy</button>
                     </div>
                 </div>
 
@@ -146,33 +87,34 @@
                     <h1 class="h2">Tryb</h1>
                 </div>
                 <div class="btn-group pt-3 pb-3" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked onclick="autoModeClick()">
                     <label class="btn btn-outline-primary" for="btnradio1">Auto</label>
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" onclick="auto3DModeClick()">
                     <label class="btn btn-outline-primary" for="btnradio2">Auto 3D</label>
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" onclick="manualModeClick()">
                     <label class="btn btn-outline-primary" for="btnradio3">Ręczny</label>
                 </div>
 
                 <form>
-                    <div class="mb-3">
-                        <label for="measurments1" class="form-label">Liczba pomiarów</label>
-                        <input type="number" class="form-control" id="measurments1" aria-describedby="measurments1Help"
-                            min="2" max="100">
-                        <div id="measurments1Help" class="form-text">Pomiary będą rozmieszczone równomiernie na okręgu.
-                            Przedział 2-100</div>
+                    <div class="mb-3" id="measurementControlSection">
+                        <label for="measurements1" class="form-label">Liczba pomiarów na okręgu</label>
+                        <input type="number" class="form-control" id="measurements1" aria-describedby="measurements1Help" min="2" max="100">
+                        <div id="measurements1Help" class="form-text pb-3">Pomiary będą rozmieszczone równomiernie na okręgu. Przedział 2-100</div>
+
                     </div>
-                    <button type="submit" class="btn btn-primary">Start</button>
+                    <button type="button" class="btn btn-primary" onclick="measurementStartClick()">Start</button>
+                    <button type="button" class="btn btn-danger">Anuluj</button>
                 </form>
 
             </main>
         </div>
     </div>
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='js/bootstrap.bundle.min.js')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='js/dashboard.js')}}">
+    <script src="{{ url_for('static',filename='js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ url_for('static',filename='js/dashboard.js')}}"></script>
+    <script src="{{ url_for('static',filename='js/custom.js')}}"></script>
 </body>
 
 </html>
