@@ -22,8 +22,8 @@ AZ_ACCELERATION = 20 # [deg/s^2]
 AZ_MAX_SPEED = 45 # [deg/s]
 
 # Limits
-AZ_LIMIT_LEFT = -180 # [deg]
-AZ_LIMIT_RIGHT = 180 # [deg]
+AZ_LIMIT_POS = 180 # [deg]
+AZ_LIMIT_NEG = -180 # [deg]
 
 
 # Definitions for elevator motor
@@ -44,5 +44,5 @@ EL_ACCELERATION = 20 # [deg/s^2]
 EL_MAX_SPEED = 20 # [deg/s]
 
 # Limits
-EL_LIMIT_DOWN = -20 # [deg]
-EL_LIMIT_UP = 20 # [deg]
+EL_LIMIT_POS = 20 # [deg]
+EL_LIMIT_NEG = -20 # [deg]

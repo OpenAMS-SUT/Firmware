@@ -57,6 +57,18 @@ class MotorDriver:
                 "inv" : EL_INVERT
             }
         }
+
+        self.limits = {
+            MOTOR_AZ : {
+                "pos" : AZ_LIMIT_POS,
+                "neg" : AZ_LIMIT_NEG
+            },
+            MOTOR_EL : {
+                "pos" : EL_LIMIT_POS,
+                "neg" : EL_LIMIT_NEG
+            }
+        }
+
         self._init_gpio()
 
 
@@ -108,7 +120,7 @@ class MotorDriver:
 
     def _run(self, motor, accel_steps, normal_steps):
         acc_time = 0
-        for s in range(accel_steps):
+        for _ in range(accel_steps):
             vel = self.min_vel[motor] + self.acceleration[motor] * self.steps_per_deg[motor] * acc_time
             acc_time += 1/vel
             self._step(motor, 0.5 / vel)
@@ -118,7 +130,7 @@ class MotorDriver:
 
         start_vel = vel - self.min_vel[motor]
         acc_time = 0
-        for s in range(accel_steps-1, -1, -1):
+        for _ in range(accel_steps):
             acc_time += 1/vel
             vel = start_vel - self.acceleration[motor] * self.steps_per_deg[motor] * acc_time + self.min_vel[motor]
             self._step(motor, 0.5 / vel)
@@ -127,8 +139,10 @@ class MotorDriver:
     def move(self, motor, position):
         """Move motor to specific position given in degrees"""
 
+        position = max(self.limits[motor]["neg"], min(position, self.limits[motor]["pos"]))
+
         diff = int(position * self.steps_per_deg[motor]) - self.pos[motor]
         self._set_dir(motor, position > self.pos[motor])
-        a, b =self._calc_num_steps(motor, diff)
-        self._run(motor, a,b)
+        accel_steps, normal_steps = self._calc_num_steps(motor, diff)
+        self._run(motor, accel_steps, normal_steps)
         self.pos[motor] += diff
