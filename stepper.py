@@ -119,7 +119,12 @@ class MotorDriver:
 
 
     def _run(self, motor, accel_steps, normal_steps):
+        if accel_steps == 1:
+            accel_steps = 0
+            normal_steps += 2
+
         acc_time = 0
+        vel = self.min_vel[motor]
         for _ in range(accel_steps):
             vel = self.min_vel[motor] + self.acceleration[motor] * self.steps_per_deg[motor] * acc_time
             acc_time += 1/vel
