@@ -25,24 +25,39 @@ function manualModeClick() {
 }
 
 function measurementStartClick(){
-    var stateField = document.getElementById("stateField");
-if(isMoving){
-    stateField.innerHTML = `
-        <button class="btn btn-primary" type="button" style="pointer-events: none;" id="stateMoving">
-        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-        Obracanie
-        </button>`;
-    isMoving = false;
-}else{
-    stateField.innerHTML = `<button type="button" class="btn btn-success" style="pointer-events: none;" id="stateReady">Gotowy</button>`;
-    isMoving = true;
-}
-$.get('_moveSteppers', {angle: document.getElementById('measurements1').value })
+    if(isMoving == false){
+        isMoving = true
+        checkState()
+        $.get('_moveSteppers', {angle: document.getElementById('measurements1').value })
+    }
 }
 
 //this function should check the state of the device
 function checkState(){
-
+    var stateField = document.getElementById("stateField");
+    var interval = setInterval(function(){
+        $.ajax({
+          url: "/_checkState",
+          type: "get",
+          success: function(response) {
+            if(response == "True"){
+                stateField.innerHTML = `<button type="button" class="btn btn-success" style="pointer-events: none;" id="stateReady">Gotowy</button>`;
+                isMoving = true; 
+                clearInterval(interval)
+            }else{
+                stateField.innerHTML = `
+                <button class="btn btn-primary" type="button" style="pointer-events: none;" id="stateMoving">
+                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                Obracanie
+                </button>`;
+                isMoving = false;  
+            }
+           },
+          error: function(xhr) {
+              //Handel error
+          }
+        }); 
+    }, 1000);
 }
 
 /*
