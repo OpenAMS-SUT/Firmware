@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/dashboard.css') }}">
-
+    
 
     <meta name="theme-color" content="#712cf9">
 </head>
@@ -87,21 +87,21 @@
                     <h1 class="h2">Tryb</h1>
                 </div>
                 <div class="btn-group pt-3 pb-3" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked onclick="autoModeClick()">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" onclick="autoModeClick()" disabled>
                     <label class="btn btn-outline-primary" for="btnradio1">Auto</label>
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" onclick="auto3DModeClick()">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" onclick="auto3DModeClick()" disabled>
                     <label class="btn btn-outline-primary" for="btnradio2">Auto 3D</label>
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" onclick="manualModeClick()">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" onclick="manualModeClick()" checked>
                     <label class="btn btn-outline-primary" for="btnradio3">Ręczny</label>
                 </div>
 
                 <form>
                     <div class="mb-3" id="measurementControlSection">
-                        <label for="measurements1" class="form-label">Liczba pomiarów na okręgu</label>
-                        <input type="number" class="form-control" id="measurements1" aria-describedby="measurements1Help" min="2" max="100">
-                        <div id="measurements1Help" class="form-text pb-3">Pomiary będą rozmieszczone równomiernie na okręgu. Przedział 2-100</div>
+                        <label for="measurements1" class="form-label">Podaj kąt o który chcesz przesunąć ramię:</label>
+                        <input type="number" class="form-control" id="measurements1" aria-describedby="measurements1Help" min="1" max="360">
+                        <div id="measurements1Help" class="form-text pb-3">ruch zgodnie ze wskazówkami zegara</div>
 
                     </div>
                     <button type="button" class="btn btn-primary" onclick="measurementStartClick()">Start</button>
@@ -115,6 +115,7 @@
     <script src="{{ url_for('static',filename='js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{ url_for('static',filename='js/dashboard.js')}}"></script>
     <script src="{{ url_for('static',filename='js/custom.js')}}"></script>
+    <script src="{{ url_for('static',filename='js/jquery-3.6.0.min.js')}}"></script>
 </body>
 
 </html>

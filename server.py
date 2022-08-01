@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -7,6 +7,7 @@ app = Flask(__name__)
 def pageMain():
     return render_template('panel.html')
 
+
 @app.route("/info")
 def pageInfo():
     return render_template('info.html')
@@ -14,5 +15,12 @@ def pageInfo():
 @app.route("/settings")
 def pageSettings():
     return render_template('settings.html')
+
+@app.route("/_moveSteppers")
+def moveSteppers():
+    angle = request.args.get('angle')
+    print(angle)
+    return "ok"
+
 
 app.run(host='0.0.0.0', port=80, debug=True)

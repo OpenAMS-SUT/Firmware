@@ -37,9 +37,21 @@ if(isMoving){
     stateField.innerHTML = `<button type="button" class="btn btn-success" style="pointer-events: none;" id="stateReady">Gotowy</button>`;
     isMoving = true;
 }
+$.get('_moveSteppers', {angle: document.getElementById('measurements1').value })
+}
 
 //this function should check the state of the device
 function checkState(){
 
 }
-}
+
+/*
+$(function() {
+    $('a#process_input').bind('click', function() {
+      $.getJSON('/_moveSteppers', {
+        angle: $('input[id="measurements1"]').val(),
+      });
+      return false;
+    });
+  });
+*/
