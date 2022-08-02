@@ -87,14 +87,14 @@
                     <h1 class="h2">Tryb</h1>
                 </div>
                 <div class="btn-group pt-3 pb-3" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" onclick="manualModeClick()" checked>
+                    <label class="btn btn-outline-primary" for="btnradio3">Ręczny</label>
+
                     <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" onclick="autoModeClick()" disabled>
                     <label class="btn btn-outline-primary" for="btnradio1">Auto</label>
 
                     <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" onclick="auto3DModeClick()" disabled>
                     <label class="btn btn-outline-primary" for="btnradio2">Auto 3D</label>
-
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" onclick="manualModeClick()" checked>
-                    <label class="btn btn-outline-primary" for="btnradio3">Ręczny</label>
                 </div>
 
                 <form>
@@ -102,10 +102,8 @@
                         <label for="measurements1" class="form-label">Podaj kąt o który chcesz przesunąć ramię:</label>
                         <input type="number" class="form-control" id="measurements1" aria-describedby="measurements1Help" min="1" max="360">
                         <div id="measurements1Help" class="form-text pb-3">ruch zgodnie ze wskazówkami zegara</div>
-
-                    </div>
-                    <button type="button" class="btn btn-primary" onclick="measurementStartClick()">Go</button>
-                   <!--<button type="button" class="btn btn-danger">Anuluj</button>--> 
+                        <button type="button" class="btn btn-primary" id="measurmentGoButton" onclick="measurementStartClick()">Go</button>
+                </div>
                 </form>
 
             </main>
