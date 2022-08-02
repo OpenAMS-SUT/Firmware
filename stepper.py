@@ -35,6 +35,11 @@ class MotorDriver:
             MOTOR_EL : 0
         }
 
+        self.dir = {
+            MOTOR_AZ : 0,
+            MOTOR_EL : 0
+        }
+
         self.acceleration = {
             MOTOR_AZ : AZ_ACCELERATION,
             MOTOR_EL : EL_ACCELERATION
@@ -107,8 +112,9 @@ class MotorDriver:
         return accel_steps, steps - accel_steps * 2
 
 
-    def _set_dir(self, motor, dir):
-        GPIO.output(self.pins[motor]["dir"], dir ^ self.pins[motor]["inv"])
+    def _set_dir(self, motor, _dir):
+        GPIO.output(self.pins[motor]["dir"], _dir ^ self.pins[motor]["inv"])
+        self.dir[motor] = _dir ^ self.pins[motor]["inv"]
 
 
     def _step(self, motor, delay):
@@ -116,6 +122,10 @@ class MotorDriver:
         GPIO.output(self.pins[motor]["step"], GPIO.HIGH)
         sleep(delay)
         GPIO.output(self.pins[motor]["step"], GPIO.LOW)
+        if self.dir[motor]:
+            self.pos[motor] += 1
+        else:
+            self.pos[motor] -= 1
 
 
     def _run(self, motor, accel_steps, normal_steps):
@@ -150,4 +160,12 @@ class MotorDriver:
         self._set_dir(motor, position > self.pos[motor])
         accel_steps, normal_steps = self._calc_num_steps(motor, diff)
         self._run(motor, accel_steps, normal_steps)
-        self.pos[motor] += diff
+
+
+    def get_pos(self, motor):
+        """Get motor position in degrees"""
+        return self.pos[motor] / self.steps_per_deg[motor]
+
+
+    def move_inc(self, motor, diff):
+        self.move(motor, self.get_pos(motor) + diff)

@@ -12,9 +12,9 @@ AZ_DIR = 27
 AZ_INVERT = False
 
 # Hardware definitions
-AZ_STEPS_PER_REV = 90
-AZ_MICROSTEPPING = 1
-AZ_GEARING = 1
+AZ_STEPS_PER_REV = 400
+AZ_MICROSTEPPING = 8
+AZ_GEARING = 5.8
 
 # Speeds
 AZ_JERK = 5 # [deg/s]
@@ -34,9 +34,9 @@ EL_DIR = 26
 EL_INVERT = False
 
 # Hardware definitions
-EL_STEPS_PER_REV = 90
-EL_MICROSTEPPING = 1
-EL_GEARING = 1
+EL_STEPS_PER_REV = 400
+EL_MICROSTEPPING = 8
+EL_GEARING = 0.053125 # 17 / 8 / 40
 
 # Speeds
 EL_JERK = 5 # [deg/s]
