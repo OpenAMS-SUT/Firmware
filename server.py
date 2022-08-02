@@ -1,3 +1,4 @@
+from socket import AI_PASSIVE
 from time import sleep
 from flask import Flask, render_template, request
 #import stepper
@@ -9,6 +10,8 @@ app = Flask(__name__)
 # 2: moving, wait until ready
 state = 1
 #stepper = stepper.MotorDriver
+
+sada = 0
 
 @app.route("/")
 @app.route("/panel")
@@ -28,10 +31,15 @@ def pageSettings():
 def moveSteppers():
     global state
     angle = request.args.get('angle')
-    print(angle)
+    axis = request.args.get('axis')
+    print("Axis: ", axis, " angle: ", angle)
     state = 2
     #move motors here
     #stepper.move()
+    if(axis == '0'):
+        pass
+    else:
+        pass
     sleep(int(angle)) #just for testing
     state = 1
     return "ok"
@@ -45,6 +53,12 @@ def checkState():
 def emergencyStop():
     #implement emergency stop
     pass
+
+@app.route("/_checkPosition")
+def checkPosition():
+    global sada
+    sada += 1
+    return str(sada) + ',0'
 
 
 app.run(host='0.0.0.0', port=80, debug=True)
