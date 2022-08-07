@@ -157,7 +157,7 @@ class MotorDriver:
         position = max(self.limits[motor]["neg"], min(position, self.limits[motor]["pos"]))
 
         diff = int(position * self.steps_per_deg[motor]) - self.pos[motor]
-        self._set_dir(motor, position > self.pos[motor])
+        self._set_dir(motor, position > self.get_pos(motor))
         accel_steps, normal_steps = self._calc_num_steps(motor, diff)
         self._run(motor, accel_steps, normal_steps)
 
