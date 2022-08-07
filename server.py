@@ -37,10 +37,13 @@ def moveSteppers():
     state = 2
 
     # Move motors here
-    if(axis == '0'):
-        driver.move_inc(MOTOR_AZ, float(angle))
-    else:
-        driver.move_inc(MOTOR_EL, float(angle))
+    try:
+        if(axis == '0'):
+            driver.move_inc(MOTOR_AZ, float(angle.replace(',', '.')))
+        else:
+            driver.move_inc(MOTOR_EL, float(angle.replace(',', '.')))
+    except ValueError:
+        pass
 
     state = 1
     return "ok"
